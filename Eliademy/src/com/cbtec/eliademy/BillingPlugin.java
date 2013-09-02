@@ -27,7 +27,7 @@ public class BillingPlugin extends CordovaPlugin
 	{
 		if (Eliademy.sBillingService == null)
 		{
-			Log.e("Billing service is not available/ready.");
+			// Log.e("Billing service is not available/ready.");
 			
 			return false;
 		}

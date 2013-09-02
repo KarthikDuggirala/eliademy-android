@@ -3,12 +3,12 @@
 <% _.each(csections, function (section, idx) { if (section.visible) { %>
 
 <% if (!idx) { %>
-  <div class="container-fluid container-fluid-1 container-fluid-4">
+  <div class="container-fluid container-fluid-1 container-fluid-4" id="course-section-<%= section.id %>">
 	<h1 class="heading"<% if (course.coursebackground) { print(" style=\"background-image: url('" + course.coursebackground + "');\""); } %>><%= course.fullname %></h1>
 	<p class="p-1 p-3 p-4 p-5">Introduction</p>
 	<div class="p-2 p-6" style="overflow: auto;"><%= section.summary %></div>
 <% } else  { %>
-  <div class="container-fluid container-fluid-1">
+  <div class="container-fluid container-fluid-1" id="course-section-<%= section.id %>">
 	<p class="p-3 p-4 p-7 p-9"><%= section.name %></p>
 	<div class="p-5 p-6" style="overflow: auto;"><%= section.summary %></div>
 <% } %>

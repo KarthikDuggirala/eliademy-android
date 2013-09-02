@@ -95,7 +95,7 @@ define(["text!app/templates/pages/course.html", "i18n!nls/strings", "app/models/
 
                     sections.each(function (section)
                     {
-                        InlineContent.fixAttachmentUrls(this.$el, section.get("attachments"));
+                        InlineContent.fixAttachmentUrls(this.$("#course-section-" + section.get("id")), section.get("attachments"));
 
                         section.get("attachments").each(function (att)
                         {

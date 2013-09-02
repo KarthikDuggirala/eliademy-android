@@ -37,18 +37,18 @@ public class EliademyService extends Service {
 	@Override
 	public void onCreate() {
 
-		Log.d("EliademyService", "On create called");
+		// Log.d("EliademyService", "On create called");
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		Log.d("EliademyService", "Received start id " + startId + ": " + intent);
+		// Log.d("EliademyService", "Received start id " + startId + ": " + intent);
 		return START_STICKY;
 	}
 
 	@Override
 	public void onDestroy() {
-		Log.d("EliademyService", "On destroy called");
+		// Log.d("EliademyService", "On destroy called");
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class EliademyService extends Service {
 
 		@Override
 		public boolean deInitializeService(String data) {
-			Log.d(TAG, "deinitialize service ");
+			// Log.d(TAG, "deinitialize service ");
 			EliademyUtils.serviceCall(data, "local_monorailservices_user_logout", mToken, mServiceClient);
 			mToken = null;
 			mUserId = 0;
@@ -82,32 +82,32 @@ public class EliademyService extends Service {
 
 		@Override
 		public String eliademyGetAssignments(String data) {
-			Log.d(TAG, "get assignments");
+			// Log.d(TAG, "get assignments");
 			return EliademyUtils.serviceCall(data, "local_monorailservices_get_assignments", mToken, mServiceClient);
 
 		}
 
 		@Override
 		public String eliademyGetCourseContents(String data) {
-			Log.d(TAG, "get course contents");
+			// Log.d(TAG, "get course contents");
 			return EliademyUtils.serviceCall(data, "local_monorailservices_course_get_cont", mToken, mServiceClient);
 		}
 
 		@Override
 		public String eliademyGetEnrolledUsers(String data) {
-			Log.d(TAG, "eliademyGetEnrolledUsers");
+			// Log.d(TAG, "eliademyGetEnrolledUsers");
 			return EliademyUtils.serviceCall(data,"core_enrol_get_enrolled_users", mToken, mServiceClient);
 
 		}
 
 		@Override
 		public String eliademyGetUsersCourses(String data) {
-			Log.d(TAG, "get users courses");
+			// Log.d(TAG, "get users courses");
 			return EliademyUtils.serviceCall(data, "local_monorailservices_get_assignments", mToken, mServiceClient);
 		}
 		
 		public String initializeSocialService(String data) {
-			Log.d("EliademyUtils", "initializeService");
+			// Log.d("EliademyUtils", "initializeService");
 			try {
 				JSONObject jsObj = new JSONObject(data.toString());
 				DefaultHttpClient httpclient = new DefaultHttpClient();
@@ -137,12 +137,12 @@ public class EliademyService extends Service {
 						jsonStr.append(jpart);
 					}
 					iStream.close();
-					Log.d("Eliademy", jsonStr.toString());
+					// Log.d("Eliademy", jsonStr.toString());
 					JSONObject jsonObj = new JSONObject(jsonStr.toString());
 					return (String) jsonObj.get("token");
 				}
 			} catch (Exception e) {
-				Log.e("EliademyUtils", "exception", e);
+				// Log.e("EliademyUtils", "exception", e);
 				return null;
 			}
 			return null;
@@ -151,7 +151,7 @@ public class EliademyService extends Service {
 		@SuppressLint("NewApi")
 		@Override
 		public boolean initializeService(String data) {
-			Log.d(TAG, "initializeService");
+			// Log.d(TAG, "initializeService");
 			try {
 				JSONObject jsObj = new JSONObject(data.toString());
 				mServiceClient = jsObj.getString("serviceurl");
@@ -165,7 +165,7 @@ public class EliademyService extends Service {
 			    }			    
 			    return true;
 			} catch (Exception e) {
-				Log.e(TAG, "exception", e);
+				// Log.e(TAG, "exception", e);
 				return false;
 			}
 		}
@@ -180,7 +180,7 @@ public class EliademyService extends Service {
 					JSONObject jsonObj = new JSONObject(retval);
 					mUserId = (Integer) jsonObj.get("userid");
 				} catch (Exception e) {
-					Log.e("Eliademy", "exception", e);
+					// Log.e("Eliademy", "exception", e);
 					return null;
 				}
 			}
@@ -205,7 +205,7 @@ public class EliademyService extends Service {
 
 		private boolean pushNotifications(String data, String url)
 				throws RemoteException {
-			Log.d(TAG, "pushNotifications");
+			// Log.d(TAG, "pushNotifications");
 			try {
 				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 				if (data.toString().length() > 0) {
@@ -233,11 +233,11 @@ public class EliademyService extends Service {
 					iStream.close();
 					JSONObject jsonObj = new JSONObject(jsonStr.toString());
 					boolean retval = (Boolean) jsonObj.get("registered");
-					Log.d(TAG, "Registered: " + retval);
+					// Log.d(TAG, "Registered: " + retval);
 					return retval;
 				}
 			} catch (Exception e) {
-				Log.e("Eliademy", "exception", e);
+				// Log.e("Eliademy", "exception", e);
 				return false;
 			}
 			return false;

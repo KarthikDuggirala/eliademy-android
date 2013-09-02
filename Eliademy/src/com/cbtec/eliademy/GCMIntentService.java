@@ -47,50 +47,50 @@ public class GCMIntentService extends GCMBaseIntentService {
 
 	@Override
 	protected void onRegistered(Context context, String registrationId) {
-		Log.d(TAG, "Device registered: regId = " + registrationId);
+		// Log.d(TAG, "Device registered: regId = " + registrationId);
 		JSONObject json;
 
 		try {
 			json = new JSONObject().put("event", "registered");
 			json.put("registrationId", registrationId);
-			Log.v(TAG, json.toString());
+			// Log.v(TAG, json.toString());
 			GCMPlugin.sendJavascript(json);
 		} catch (JSONException e) {
-			Log.e(TAG, "JSON exception: " + e.getMessage());
+			// Log.e(TAG, "JSON exception: " + e.getMessage());
 		}
 	}
 
 	@Override
 	protected void onUnregistered(Context context, String registrationId) {
-		Log.d(TAG, "Device unregistered");
+		// Log.d(TAG, "Device unregistered");
 		if (GCMRegistrar.isRegisteredOnServer(context)) {
 			try {
 				JSONObject json;
 				json = new JSONObject().put("event", "unregistered");
 				json.put("registrationId", registrationId);
-				Log.v(TAG, json.toString());
+				// Log.v(TAG, json.toString());
 				GCMPlugin.sendJavascript(json);
 			} catch (JSONException e) {
-				Log.e(TAG, "JSON exception" + e.getMessage());
+				// Log.e(TAG, "JSON exception" + e.getMessage());
 			}
 		} else {
 			// This callback results from the call to unregister made on
 			// ServerUtilities when the registration to the server failed.
-			Log.d(TAG, "Ignoring unregister callback");
+			// Log.d(TAG, "Ignoring unregister callback");
 		}
 	}
 
 	@Override
 	protected void onMessage(Context context, Intent intent) {
 		Bundle extras = intent.getExtras();
-		Log.d(TAG, "Received message" + extras.toString());
+		// Log.d(TAG, "Received message" + extras.toString());
 		if (extras != null) {
 			try {
 				JSONObject json;
 				json = new JSONObject().put("event", "notifications");
 				json.put("notifications", extras.getString("notifications"));
 
-				Log.v(TAG, json.toString());
+				// Log.v(TAG, json.toString());
 				if (GCMPlugin.isActive()) {
 					// TODO: Find better way
 					JSONObject msgobj = new JSONObject(
@@ -110,32 +110,32 @@ public class GCMIntentService extends GCMBaseIntentService {
 					generateNotification(context, msg);
 				}
 			} catch (JSONException e) {
-				Log.e(TAG, "JSON exception" + e.getMessage());
+				// Log.e(TAG, "JSON exception" + e.getMessage());
 			}
 		}
 	}
 
 	@Override
 	protected void onDeletedMessages(Context context, int total) {
-		Log.d(TAG, "Received deleted messages notification");
+		// Log.d(TAG, "Received deleted messages notification");
 	}
 
 	@Override
 	public void onError(Context context, String error) {
-		Log.d(TAG, "Received error: " + error);
+		// Log.d(TAG, "Received error: " + error);
 		try {
 			JSONObject json;
 			json = new JSONObject().put("event", "error");
 			json.put("error", error);
 			GCMPlugin.sendJavascript(json);
 		} catch (JSONException e) {
-			Log.e(TAG, "JSON exception" + e.getMessage());
+			// Log.e(TAG, "JSON exception" + e.getMessage());
 		}
 	}
 
 	@Override
 	protected boolean onRecoverableError(Context context, String error) {
-		Log.d(TAG, "Received recoverable error: " + error);
+		// Log.d(TAG, "Received recoverable error: " + error);
 		return super.onRecoverableError(context, error);
 	}
 

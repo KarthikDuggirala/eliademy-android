@@ -42,7 +42,7 @@ public class EliademyLms extends CordovaPlugin {
 		@Override
 		public void onServiceConnected(ComponentName className, IBinder service) {
 			mIBinder = LmsService.Stub.asInterface(service);
-			Log.i("HLMS", "Service connection initialized");
+			// Log.i("HLMS", "Service connection initialized");
 			mCallbackContext.success();
 			mCallbackContext = null;
 		}
@@ -89,7 +89,7 @@ public class EliademyLms extends CordovaPlugin {
 	public boolean execute(String action, JSONArray data,
 			final CallbackContext callbackContext) throws JSONException {
 
-		Log.i("HLMS", action);
+		// Log.i("HLMS", action);
 
 		if ((action.compareTo("openfilesrv") == 0)) {
 			try {
@@ -102,7 +102,7 @@ public class EliademyLms extends CordovaPlugin {
 				}
 				String mimetype = android.webkit.MimeTypeMap.getSingleton()
 						.getMimeTypeFromExtension(mimeextn);
-				Log.i("HLMS", fileuri + "  " + mimetype);
+				// Log.i("HLMS", fileuri + "  " + mimetype);
 				intent.setDataAndType(fileuri, mimetype);
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -110,7 +110,7 @@ public class EliademyLms extends CordovaPlugin {
 				.startActivity(intent);
 				callbackContext.success();
 			} catch (Exception e) {
-				Log.e("HLMS", "exception", e);
+				// Log.e("HLMS", "exception", e);
 				callbackContext.error(0);
 			}
 			return true;
@@ -125,7 +125,7 @@ public class EliademyLms extends CordovaPlugin {
 						cordova.startActivityForResult(EliademyLms.this,
 								intent, submitFileCode);
 					} catch (Exception e) {
-						Log.e("HLMS", "exception", e);
+						// Log.e("HLMS", "exception", e);
 						callbackContext.error(0);
 					}
 					return;
@@ -142,7 +142,7 @@ public class EliademyLms extends CordovaPlugin {
 					// From url determine version 2.2, 2.3, 2.4 and change
 					mServiceName = "com.cbtec.service" + sname;
 				}
-				Log.i("HLMS", "Connecting to service: " + mServiceName);
+				// Log.i("HLMS", "Connecting to service: " + mServiceName);
 				doBindService();
 			} else {
 				callbackContext.success();
@@ -155,10 +155,10 @@ public class EliademyLms extends CordovaPlugin {
 			try {
 				mappedCmd = mapExecCommand(aData.getString(0));
 			} catch (JSONException e) {
-				Log.e("HLMS", "exception", e);
+				// Log.e("HLMS", "exception", e);
 			}
 			if (mappedCmd == null) {
-				Log.i("HLMS", "LMS service call failed " + mappedCmd);
+				// Log.i("HLMS", "LMS service call failed " + mappedCmd);
 				callbackContext.error(0);// TODO : error enum
 				return false;
 			}
@@ -168,12 +168,11 @@ public class EliademyLms extends CordovaPlugin {
 				@Override
 				@SuppressLint("NewApi")
 				public void run() {
-					Log.i("HLMS",
-							"Runner execute " + aAction + aData.toString());
+					// Log.i("HLMS","Runner execute " + aAction + aData.toString());
 					if (aAction.compareTo("lmsservice") == 0) {
 						try {
 							String retval = null;
-							Log.i("HLMS", "Execute cmd: " + execCmd);
+							// Log.i("HLMS", "Execute cmd: " + execCmd);
 							if (execCmd.compareTo("initialize") == 0) {
 								if (mIBinder.initializeService(aData
 										.getString(1))) {
@@ -190,14 +189,14 @@ public class EliademyLms extends CordovaPlugin {
 									return;
 								}
 							} else if (execCmd.compareTo("pushregister") == 0) {
-								Log.i("pushdata", aData.getString(1));
+								// Log.i("pushdata", aData.getString(1));
 								if (mIBinder.registerPushNotifications(aData
 										.getString(1))) {
 									callbackContext.success();
 									return;
 								}
 							} else if (execCmd.compareTo("pushunregister") == 0) {
-								Log.i("pushdata", aData.getString(1));
+								// Log.i("pushdata", aData.getString(1));
 								if (mIBinder.unregisterPushNotifications(aData
 										.getString(1))) {
 									callbackContext.success();
@@ -220,7 +219,7 @@ public class EliademyLms extends CordovaPlugin {
 										.eliademyGetUserInformation(aData
 												.getString(1));
 							} else if (execCmd.compareTo("exec_webservice") == 0) {
-								Log.i("HLMS", "Execute webservice");
+								// Log.i("HLMS", "Execute webservice");
 								retval = mIBinder.eliademyExecWebService(
 										aData.getString(0), aData.getString(1));
 							} else if (execCmd.compareTo("course_get_contents") == 0) {
@@ -231,23 +230,23 @@ public class EliademyLms extends CordovaPlugin {
 								retval = mIBinder.eliademyGetEnrolledUsers(aData
 										.getString(1));
 							} else {
-								Log.i("HLMS", "LMS service failed " + execCmd);
+								// Log.i("HLMS", "LMS service failed " + execCmd);
 								callbackContext.error(0);// TODO : error enum
 							}
 							if (!retval.isEmpty()) {
-								Log.i("HLMS", "LMS service call success");
+								// Log.i("HLMS", "LMS service call success");
 								callbackContext.success(retval);
 							} else {
-								Log.i("HLMS", "LMS service call failed");
+								// Log.i("HLMS", "LMS service call failed");
 								callbackContext.error(0);// TODO : error enum
 							}
 						} catch (Exception e) {
-							Log.e("HLMS", "exception", e);
+							// Log.e("HLMS", "exception", e);
 							callbackContext.error(e.getMessage());
 							return;
 						}
 					} else {
-						Log.i("LMS", "Unsupported action call !!");
+						// Log.i("LMS", "Unsupported action call !!");
 						callbackContext.error(0);
 						return;
 					}
@@ -378,7 +377,7 @@ public class EliademyLms extends CordovaPlugin {
 					this.mCallbackContext.success(uri.toString());
 					return;
 				} else {
-					Log.i("HLMS", "callback context is null");
+					// Log.i("HLMS", "callback context is null");
 				}
 			}
 			break;
@@ -386,7 +385,7 @@ public class EliademyLms extends CordovaPlugin {
 		if (this.mCallbackContext != null) {
 			this.mCallbackContext.error(resultCode);
 		} else {
-			Log.i("HLMS", "callback context is null");
+			// Log.i("HLMS", "callback context is null");
 		}
 	}
 

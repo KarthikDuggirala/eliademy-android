@@ -43,7 +43,7 @@ public class FacebookConnect extends CordovaPlugin {
 
 	public Facebook getFacebook() {
 		if(this.appId == null) {
-			Log.e(CLASS, "ERROR: You must provide a non-empty appId.");
+			// Log.e(CLASS, "ERROR: You must provide a non-empty appId.");
 		}
 		if(this._facebook == null) {
 			this._facebook = new Facebook(this.appId);
@@ -86,7 +86,7 @@ public class FacebookConnect extends CordovaPlugin {
 	 * @throws JSONException
 	 */
 	public PluginResult initWithAppId(final JSONArray args, final CallbackContext callbackId) throws JSONException {
-		Log.d(CLASS, "initWithAppId()");
+		// Log.d(CLASS, "initWithAppId()");
 		JSONObject params = args.getJSONObject(0);
 		PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
 		JSONObject result = new JSONObject();
@@ -123,7 +123,7 @@ public class FacebookConnect extends CordovaPlugin {
 	 * @throws IOException
 	 */
 	public PluginResult login(final JSONArray args, final CallbackContext callbackId) throws JSONException, MalformedURLException, IOException {
-		Log.d(CLASS, "login() :" + args.toString());
+		// Log.d(CLASS, "login() :" + args.toString());
 		JSONObject params = args.getJSONObject(0);
 		PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
 
@@ -158,7 +158,7 @@ public class FacebookConnect extends CordovaPlugin {
 			JSONObject result = new JSONObject(facebook.request("/me"));
 			result.put("accessToken", accessToken);
 			result.put("expirationDate", accessExpires);
-			Log.d(CLASS, "login::result " + result.toString());
+			// Log.d(CLASS, "login::result " + result.toString());
 			pluginResult = new PluginResult(PluginResult.Status.OK, result);
 		}
 
@@ -177,7 +177,7 @@ public class FacebookConnect extends CordovaPlugin {
 	 * @throws IOException
 	 */
 	public PluginResult requestWithGraphPath(final JSONArray args, final CallbackContext callbackId) throws JSONException, FileNotFoundException, MalformedURLException, IOException {
-		Log.d(CLASS, "requestWithGraphPath() :" + args.toString());
+		// Log.d(CLASS, "requestWithGraphPath() :" + args.toString());
 		JSONObject params = args.getJSONObject(0);
 		PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
 
@@ -194,7 +194,7 @@ public class FacebookConnect extends CordovaPlugin {
 		String httpMethod = params.has("httpMethod") ? params.getString("httpMethod") : "GET";
 
 		JSONObject result = new JSONObject(facebook.request(path, options, httpMethod));
-		Log.d(CLASS, "requestWithGraphPath::result " + result.toString());
+		// Log.d(CLASS, "requestWithGraphPath::result " + result.toString());
 		pluginResult = new PluginResult(PluginResult.Status.OK, result);
 
 		return pluginResult;
@@ -212,7 +212,7 @@ public class FacebookConnect extends CordovaPlugin {
 	 * @throws IOException
 	 */
 	public PluginResult dialog(final JSONArray args, final CallbackContext callbackId) throws JSONException, FileNotFoundException, MalformedURLException, IOException {
-		Log.d(CLASS, "dialog() :" + args.toString());
+		// Log.d(CLASS, "dialog() :" + args.toString());
 		JSONObject params = args.getJSONObject(0);
 		PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
 
@@ -249,7 +249,7 @@ public class FacebookConnect extends CordovaPlugin {
 	 * @throws IOException
 	 */
 	public PluginResult logout(final JSONArray args, final CallbackContext callbackId) throws JSONException, MalformedURLException, IOException {
-		Log.d(CLASS, "logout() :" + args.toString());
+		// Log.d(CLASS, "logout() :" + args.toString());
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.cordova.getActivity().getApplicationContext());
 		prefs.edit().remove("access_expires").commit();
 		prefs.edit().remove("access_token").commit();
@@ -285,7 +285,7 @@ public class FacebookConnect extends CordovaPlugin {
 
 		@Override
 		public void onComplete(Bundle values) {
-			Log.d(CLASS, "AuthorizeDialogListener::onComplete() " + values.toString());
+			// Log.d(CLASS, "AuthorizeDialogListener::onComplete() " + values.toString());
 
 			// Update session information
 			final String accessToken = this.facebook.getAccessToken();
@@ -302,7 +302,7 @@ public class FacebookConnect extends CordovaPlugin {
 						JSONObject result = new JSONObject(me.facebook.request("/me"));
 						result.put("accessToken", accessToken);
 						result.put("expirationDate", accessExpires);
-						Log.d(CLASS, "AuthorizeDialogListener::result " + result.toString());
+						// Log.d(CLASS, "AuthorizeDialogListener::result " + result.toString());
 						pluginResult = new PluginResult(PluginResult.Status.OK, result);
 					} catch (MalformedURLException e) {
 						pluginResult = new PluginResult(PluginResult.Status.ERROR, "MalformedURLException");
@@ -323,7 +323,7 @@ public class FacebookConnect extends CordovaPlugin {
 
 		@Override
 		public void onFacebookError(FacebookError e) {
-			Log.d(CLASS, "AuthorizeDialogListener::onFacebookError() " + e.getMessage());
+			// Log.d(CLASS, "AuthorizeDialogListener::onFacebookError() " + e.getMessage());
 			JSONObject result = new JSONObject();
 			try { result.put("error", 1); result.put("message", e.getMessage()); } catch (JSONException ex) {}
 			this.callbackId.error(result.toString());
@@ -331,7 +331,7 @@ public class FacebookConnect extends CordovaPlugin {
 
 		@Override
 		public void onError(DialogError e) {
-			Log.d(CLASS, "AuthorizeDialogListener::onError() " + e.getMessage());
+			// Log.d(CLASS, "AuthorizeDialogListener::onError() " + e.getMessage());
 			JSONObject result = new JSONObject();
 			try { result.put("error", 1); result.put("message", e.getMessage()); } catch (JSONException ex) {}
 			this.callbackId.error(result.toString());
@@ -339,7 +339,7 @@ public class FacebookConnect extends CordovaPlugin {
 
 		@Override
 		public void onCancel() {
-			Log.d(CLASS, "AuthorizeDialogListener::onCancel()");
+			// Log.d(CLASS, "AuthorizeDialogListener::onCancel()");
 			JSONObject result = new JSONObject();
 			try { result.put("cancelled", 1); } catch (JSONException e) {}
 			this.callbackId.error(result.toString());
@@ -369,7 +369,7 @@ public class FacebookConnect extends CordovaPlugin {
 
 		@Override
 		public void onComplete(Bundle values) {
-			Log.d(CLASS, "RegularDialogListener::onComplete() " + values.toString());
+			// Log.d(CLASS, "RegularDialogListener::onComplete() " + values.toString());
 
 			JSONObject result = new JSONObject();
 			Iterator<?> keys = values.keySet().iterator();
@@ -390,7 +390,7 @@ public class FacebookConnect extends CordovaPlugin {
 
 		@Override
 		public void onFacebookError(FacebookError e) {
-			Log.d(CLASS, "RegularDialogListener::onFacebookError() " + e.getMessage());
+			// Log.d(CLASS, "RegularDialogListener::onFacebookError() " + e.getMessage());
 			JSONObject result = new JSONObject();
 			try { result.put("error", 1); result.put("message", e.getMessage()); } catch (JSONException ex) {}
 			this.callbackId.error(result.toString());
@@ -398,7 +398,7 @@ public class FacebookConnect extends CordovaPlugin {
 
 		@Override
 		public void onError(DialogError e) {
-			Log.d(CLASS, "RegularDialogListener::onError() " + e.getMessage());
+			// Log.d(CLASS, "RegularDialogListener::onError() " + e.getMessage());
 			JSONObject result = new JSONObject();
 			try { result.put("error", 1); result.put("message", e.getMessage()); } catch (JSONException ex) {}
 			this.callbackId.error(result.toString());
@@ -406,7 +406,7 @@ public class FacebookConnect extends CordovaPlugin {
 
 		@Override
 		public void onCancel() {
-			Log.d(CLASS, "RegularDialogListener::onCancel()");
+			// Log.d(CLASS, "RegularDialogListener::onCancel()");
 			JSONObject result = new JSONObject();
 			try { result.put("cancelled", 1); } catch (JSONException e) {}
 			this.callbackId.error(result.toString());

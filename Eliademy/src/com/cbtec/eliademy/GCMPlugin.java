@@ -67,7 +67,7 @@ public class GCMPlugin extends CordovaPlugin {
 	public boolean execute(String action, JSONArray data,
 			final CallbackContext callbackContext) throws JSONException {
 
-		Log.d("GCM", action);
+		// Log.d("GCM", action);
 
 		mSession = true;
 
@@ -82,20 +82,20 @@ public class GCMPlugin extends CordovaPlugin {
 				GCMRegistrar.register(this.cordova.getActivity(), mSenderID);
 				return true;
 			} catch (JSONException e) {
-				Log.e("GCM", "Exception " + e.getMessage());
+				// Log.e("GCM", "Exception " + e.getMessage());
 			}
 		} else if (action.equals("unregister")) {
 			GCMRegistrar.unregister(this.cordova.getActivity());
 			return true;
 		} else {
-			Log.e("GCM", "Invalid action: " + action);
+			// Log.e("GCM", "Invalid action: " + action);
 		}
 		return false;
 	}
 
 	public static void sendJavascript(JSONObject _json) {
 		String jsp = "javascript:" + mEcb + "(" + _json.toString() + ")";
-		Log.d("GCM", jsp);
+		// Log.d("GCM", jsp);
 		if (mEcb != null) {
 			mwebView.sendJavascript(jsp);
 		}

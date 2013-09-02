@@ -33,7 +33,7 @@ public class EliademyUtils {
 			String serviceClient) {
 
 		String retval = null;
-		Log.d("EliademyUtils", "Service: " + data + " Service: " + webService);
+		// Log.d("EliademyUtils", "Service: " + data + " Service: " + webService);
 
 		try {
 			DefaultHttpClient httpclient = new DefaultHttpClient();
@@ -52,7 +52,7 @@ public class EliademyUtils {
 			HttpPost httppost = new HttpPost(serviceClient
 					+ "/webservice/rest/server.php?");
 
-			Log.d("EliademyUtils", nameValuePairs.toString());
+			// Log.d("EliademyUtils", nameValuePairs.toString());
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
 			HttpResponse response = httpclient.execute(httppost);
@@ -70,7 +70,7 @@ public class EliademyUtils {
 				return jsonStr.toString();
 			}
 		} catch (Exception e) {
-			Log.e("EliademyUtils", "exception", e);
+			// Log.e("EliademyUtils", "exception", e);
 			return retval;
 		}
 		return retval;
@@ -112,7 +112,7 @@ public class EliademyUtils {
 							.getString(key)));
 				}
 			} catch (JSONException e) {
-				Log.e("EliademyUtils", "exception", e);
+				// Log.e("EliademyUtils", "exception", e);
 				return nameValuePairs;
 			}
 			index = index + 1;
@@ -121,7 +121,7 @@ public class EliademyUtils {
 	}
 	
 	public static String initializeService(String data, String serviceName, String serviceUrl) {
-		Log.d("EliademyUtils", "initializeService");
+		// Log.d("EliademyUtils", "initializeService");
 		try {
 			JSONObject jsObj = new JSONObject(data.toString());
 			DefaultHttpClient httpclient = new DefaultHttpClient();
@@ -149,12 +149,12 @@ public class EliademyUtils {
 					jsonStr.append(jpart);
 				}
 				iStream.close();
-				Log.d("Moodle", jsonStr.toString());
+				// Log.d("Moodle", jsonStr.toString());
 				JSONObject jsonObj = new JSONObject(jsonStr.toString());
 				return (String) jsonObj.get("token");
 			}
 		} catch (Exception e) {
-			Log.e("EliademyUtils", "exception", e);
+			// Log.e("EliademyUtils", "exception", e);
 			return null;
 		}
 		return null;

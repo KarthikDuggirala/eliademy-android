@@ -27,12 +27,12 @@ public class MoodleService22 extends Service {
 	@Override
 	public void onCreate() {
 
-		Log.d(TAG, "On create called");
+		// Log.d(TAG, "On create called");
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		Log.d(TAG, "Received start id " + startId + ": " + intent);
+		// Log.d(TAG, "Received start id " + startId + ": " + intent);
 		// This mode makes sense for things that will be explicitly started and
 		// stopped to run for arbitrary periods of time
 		return START_STICKY;
@@ -40,7 +40,7 @@ public class MoodleService22 extends Service {
 
 	@Override
 	public void onDestroy() {
-		Log.d(TAG, "On destroy called");
+		// Log.d(TAG, "On destroy called");
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class MoodleService22 extends Service {
 
 		@Override
 		public boolean deInitializeService(String data) {
-			Log.d(TAG, "deinitialize service ");
+			// Log.d(TAG, "deinitialize service ");
 			mToken = null;
 			mUserId = 0;
 			return true;
@@ -70,34 +70,34 @@ public class MoodleService22 extends Service {
 
 		@Override
 		public String eliademyGetAssignments(String data) {
-			Log.d(TAG, "eliademyGetAssignments");
+			// Log.d(TAG, "eliademyGetAssignments");
 			return EliademyUtils.serviceCall(data, "core_course_get_courses",
 					mToken, mServiceClient);
 		}
 
 		@Override
 		public String eliademyGetCourseContents(String data) {
-			Log.d(TAG, "eliademyGetCourseContents");
+			// Log.d(TAG, "eliademyGetCourseContents");
 			return EliademyUtils.serviceCall(data, "core_course_get_contents",
 					mToken, mServiceClient);
 		}
 
 		@Override
 		public String eliademyGetEnrolledUsers(String data) {
-			Log.d(TAG, "eliademyGetEnrolledUsers");
+			// Log.d(TAG, "eliademyGetEnrolledUsers");
 			return EliademyUtils.serviceCall(data,
 					"core_enrol_get_enrolled_users", mToken, mServiceClient);
 		}
 
 		@Override
 		public String eliademyGetUsersCourses(String data) {
-			Log.d(TAG, "eliademyGetUsersCourses");
+			// Log.d(TAG, "eliademyGetUsersCourses");
 			String retval = null;
 			JSONObject jsonObj = new JSONObject();
 			try {
 				jsonObj.put("userid", mUserId);
 			} catch (JSONException e) {
-				Log.e("Moodle", "exception", e);
+				// Log.e("Moodle", "exception", e);
 			}
 			retval = EliademyUtils.serviceCall(jsonObj.toString(),
 					"core_enrol_get_users_courses", mToken, mServiceClient);
@@ -140,7 +140,7 @@ public class MoodleService22 extends Service {
 				}
 				resObj.put("courses", rval);
 			} catch (JSONException e) {
-				Log.e("Moodle", "exception", e);
+				// Log.e("Moodle", "exception", e);
 			}
 			return resObj.toString();
 		}
@@ -148,7 +148,7 @@ public class MoodleService22 extends Service {
 		@SuppressLint("NewApi")
 		@Override
 		public boolean initializeService(String data) {
-			Log.d(TAG, "initializeService");
+			// Log.d(TAG, "initializeService");
 			try {
 				JSONObject jsObj = new JSONObject(data.toString());
 				mServiceClient = jsObj.getString("serviceurl");
@@ -159,7 +159,7 @@ public class MoodleService22 extends Service {
 				}
 				return true;
 			} catch (Exception e) {
-				Log.e("Moodle", "exception", e);
+				// Log.e("Moodle", "exception", e);
 				return false;
 			}
 		}
@@ -175,7 +175,7 @@ public class MoodleService22 extends Service {
 					JSONObject jsonObj = new JSONObject(retval);
 					mUserId = (Integer) jsonObj.get("userid");
 				} catch (Exception e) {
-					Log.e("Moodle", "exception", e);
+					// Log.e("Moodle", "exception", e);
 					return null;
 				}
 			}
@@ -193,7 +193,7 @@ public class MoodleService22 extends Service {
 			try {
 				jsonObj.put("userids", userids);
 			} catch (JSONException e) {
-				Log.e("Moodle", "exception", e);
+				// Log.e("Moodle", "exception", e);
 				return retval;
 			}
 			retval = EliademyUtils.serviceCall(jsonObj.toString(),

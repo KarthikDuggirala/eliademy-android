@@ -172,6 +172,15 @@ define(function ()
         	            navigator.app.loadUrl(url, { openExternal:true });
                     });
                 });
+
+                par.find("iframe").each(function ()
+                {
+                    // iframes might not have protocol as well...
+                    if ($(this).attr("src").substr(0, 2) == "//")
+                    {
+                        $(this).attr("src", "http:" + $(this).attr("src"));
+                    }
+                });
             }
         },
     };
